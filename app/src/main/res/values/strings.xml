@@ -9,7 +9,7 @@
     <string name="judul_buku">Judul Buku</string>
     <string name="penulis_buku">Penulis Buku</string>
     <string name="total_halaman">Total Halaman</string>
-    <string name="simpan">Tambah</string>
+    <string name="addbooks">TAMBAH</string>
     <string name="progres_x">Progress : %1$.2f %%</string>
     <string name="bagikan_progress">Hai! Saat ini saya membaca buku %1$s berjudul %2$s dengan progress %3$.2f %%!</string>
     <string name="share">Bagikan</string>
@@ -32,4 +32,5 @@
     <string name="kategoriList">"Kategori : "</string>
     <string name="baku_image_description">Ikon BaKu</string>
     <string name="about_dev">BaKu dikembangkan dengan tujuan pemenuhan assessment 1 mata kuliah Pemrograman untuk Perangkat Bergerak 1; atas nama Debby Lelyca Rohdearni dengan NIM 6706220152 dari kelas 46-01.</string>
+    <string name="simpan">SIMPAN</string>
 </resources>

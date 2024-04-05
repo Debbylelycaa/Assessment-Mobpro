@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -58,9 +60,10 @@ import org.d3if0152.bakuapp.ui.theme.BaKuAppTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddScreen(navController: NavHostController){
-    val brownColor = Color(0xFFC08261)
+    val brownColor = Color(0xFFE2C799)
     val maroonColor = Color(0xFF9A3B3B)
     Scaffold(
+        modifier = Modifier.background(Color(0xFFFEECE2)),
         topBar = {
             TopAppBar(
                 navigationIcon = {
@@ -87,8 +90,9 @@ fun AddScreen(navController: NavHostController){
 @SuppressLint("StringFormatMatches")
 @Composable
 fun AddContent(modifier: Modifier){
-    val brownColor = Color(0xFFC08261)
+    val brownColor = Color(0xFFE2C799)
     val maroonColor = Color(0xFF9A3B3B)
+    val yellow = Color(0xFFF2ECBE)
 
     var judul by remember {
         mutableStateOf("")
@@ -158,7 +162,7 @@ fun AddContent(modifier: Modifier){
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next
             ),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth().background(yellow)
         )
 
         OutlinedTextField(
@@ -171,12 +175,13 @@ fun AddContent(modifier: Modifier){
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next
             ),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth().background(yellow)
         )
 
         Row(
             modifier = Modifier
                 .padding(top = 6.dp)
+                .background(yellow)
                 .border(1.dp, Color.Gray, RoundedCornerShape(4.dp))
         ){
             radioOptions.forEach{ text ->
@@ -207,7 +212,7 @@ fun AddContent(modifier: Modifier){
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Next
             ),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth().background(yellow)
         )
 
         OutlinedTextField(
@@ -222,7 +227,7 @@ fun AddContent(modifier: Modifier){
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Done
             ),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth().background(yellow)
         )
 
         Button(
@@ -238,7 +243,8 @@ fun AddContent(modifier: Modifier){
                 }
                 try {
                     halamanDibaca.toFloat()
-                    halamanDibacaError = halamanDibaca.isEmpty() || halamanDibaca.toFloat() > totalHalaman.toFloat() || halamanDibaca.toFloat() < 0
+                    halamanDibacaError =
+                        halamanDibaca.isEmpty() || halamanDibaca.toFloat() > totalHalaman.toFloat() || halamanDibaca.toFloat() < 0
                 } catch (e: NumberFormatException) {
                     halamanDibacaError = true
                 }
@@ -247,14 +253,19 @@ fun AddContent(modifier: Modifier){
                 progres = hitungProgres(totalHalaman.toFloat(), halamanDibaca.toFloat())
                 status = getStatus(progres)
             },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = brownColor,
-                contentColor = maroonColor
-            ),
-            modifier = Modifier.padding(top = 8.dp),
-            contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp)
-        ) {
-            Text(text = stringResource(R.string.simpan))
+                modifier = Modifier.padding(top = 8.dp),
+                contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp),
+                shape = MaterialTheme.shapes.medium.copy(
+                    topStart = CornerSize(8.dp),
+                    topEnd = CornerSize(8.dp),
+                    bottomStart = CornerSize(8.dp),
+                    bottomEnd = CornerSize(8.dp)
+                ),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = brownColor,
+                    contentColor = maroonColor,
+                )        ) {
+            Text(text = stringResource(R.string.addbooks))
         }
 
         if (progres != 0f){

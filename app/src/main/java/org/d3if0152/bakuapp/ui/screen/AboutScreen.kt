@@ -2,6 +2,7 @@ package org.d3if0152.bakuapp.ui.screen
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,7 +13,6 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -32,9 +32,10 @@ import org.d3if0152.bakuapp.ui.theme.BaKuAppTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AboutScreen(navController: NavHostController){
-    val brownColor = Color(0xFFC08261)
+    val brownColor = Color(0xFFE2C799)
     val maroonColor = Color(0xFF9A3B3B)
     Scaffold(
+        modifier = Modifier.background(Color(0xFFFEECE2)),
         topBar = {
             TopAppBar(
                 navigationIcon = {
