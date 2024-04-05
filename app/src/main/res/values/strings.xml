@@ -1,3 +1,30 @@
 <resources>
-    <string name="app_name">BaKuApp</string>
+    <string name="app_name">BaKu</string>
+    <string name="back">Kembali</string>
+    <string name="about_app">Tentang Aplikasi</string>
+    <string name="copyright">BaKu merupakan aplikasi untuk track buku, mencatat seberapa jauh pengguna telah membaca buku yang dia input ke dalam aplikasi.\n</string>
+    <string name="fiksi">Fiksi</string>
+    <string name="nonfiksi">Non-fiksi</string>
+    <string name="baku_intro">baku adalah aplikasi</string>
+    <string name="judul_buku">Judul Buku</string>
+    <string name="penulis_buku">Penulis Buku</string>
+    <string name="total_halaman">Total Halaman</string>
+    <string name="simpan">Tambah</string>
+    <string name="progres_x">Progress : %1$.2f %%</string>
+    <string name="bagikan_progress">Hai! Saat ini saya membaca buku %1$s berjudul %2$s dari penulis %3$s dengan progress %4$.2f %%!</string>
+    <string name="share">Bagikan</string>
+    <string name="sedang_dibaca">Sedang dibaca.</string>
+    <string name="selesai">Selesai dibaca.</string>
+    <string name="input_invalid">Tidak boleh kosong, harap isi dengan masukan yang sesuai.</string>
+    <string name="halaman_dibaca">Halaman Dibaca</string>
+    <string name="add">Tambah Buku</string>
+    <string name="tambah_buku">Tambah buku bacaan</string>
+    <string name="list_kosong">Belum ada buku yang dibaca.</string>
+    <string name="x_diklik">%1$s dibaca.</string>
+    <string name="laman">Halaman</string>
+    <string name="judul_buku_x">Judul : %1$s</string>
+    <string name="penulis_buku_x">Penulis : %1$s</string>
+    <string name="kategori">Kategori : %1$s</string>
+    <string name="total_halaman_x">Total Halaman :  %1$s</string>
+    <string name="halaman_dibaca_x">Halaman Dibaca :  %1$s</string>
 </resources>
