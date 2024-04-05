@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">BaKu</string>
     <string name="back">Kembali</string>
-    <string name="about_app">Tentang Aplikasi</string>
-    <string name="copyright">BaKu merupakan aplikasi untuk track buku, mencatat seberapa jauh pengguna telah membaca buku yang dia input ke dalam aplikasi.\n</string>
+    <string name="about_app">Tentang BaKu</string>
+    <string name="copyright">BaKu [Bacaan-Ku] merupakan aplikasi untuk melakukan <i>tracking</i> pada buku yang dibaca.   BaKu mencatat seberapa jauh pengguna telah membaca buku yang diinput ke dalam aplikasi.</string>
     <string name="fiksi">Fiksi</string>
     <string name="nonfiksi">Non-fiksi</string>
-    <string name="baku_intro">baku adalah aplikasi</string>
+    <string name="baku_intro">Tambahkan informasi mengenai buku yang dibaca.</string>
     <string name="judul_buku">Judul Buku</string>
     <string name="penulis_buku">Penulis Buku</string>
     <string name="total_halaman">Total Halaman</string>
@@ -30,4 +30,6 @@
     <string name="judul">"Judul : "</string>
     <string name="penulis">"Penulis : "</string>
     <string name="kategoriList">"Kategori : "</string>
+    <string name="baku_image_description">Ikon BaKu</string>
+    <string name="about_dev">BaKu dikembangkan dengan tujuan pemenuhan assessment 1 mata kuliah Pemrograman untuk Perangkat Bergerak 1; atas nama Debby Lelyca Rohdearni dengan NIM 6706220152 dari kelas 46-01.</string>
 </resources>
