@@ -28,4 +28,7 @@
     <string name="kategori">Category : %1$s</string>
     <string name="total_halaman_x">Pages : %1$s</string>
     <string name="halaman_dibaca_x">Currently reading : %1$s</string>
+    <string name="judul">"Title : "</string>
+    <string name="penulis">"Author : "</string>
+    <string name="kategoriList">"Category : "</string>
 </resources>

@@ -27,4 +27,7 @@
     <string name="kategori">Kategori : %1$s</string>
     <string name="total_halaman_x">Total Halaman :  %1$s</string>
     <string name="halaman_dibaca_x">Halaman Dibaca :  %1$s</string>
+    <string name="judul">"Judul : "</string>
+    <string name="penulis">"Penulis : "</string>
+    <string name="kategoriList">"Kategori : "</string>
 </resources>

@@ -120,16 +120,21 @@ fun BooksList(books: Books, onClick: () -> Unit){
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(
-            text = books.judul,
+            text = stringResource(id = R.string.judul) + books.judul,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             fontWeight = FontWeight.Bold
         )
-        Text(text = books.penulis,
+        Text(
+            text = stringResource(id = R.string.penulis) + books.penulis,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis
         )
-        Text(text = books.kategori)
-        Text(text = books.dibaca.toString() + "/" + books.totalHalaman.toString())
+        Text(
+            text = stringResource(id = R.string.kategoriList) + books.kategori
+        )
+        Text(
+            text = "${books.dibaca}/${books.totalHalaman} ${stringResource(id = R.string.laman)}"
+        )
     }
 }
