@@ -221,12 +221,23 @@ fun AddContent(modifier: Modifier){
 
         Button(
             onClick = {
-                judulError = (judul == "")
-                penulisError = (penulis == "")
-                totalHalamanError = (totalHalaman == "" || totalHalaman.toFloat() <= 0)
-                halamanDibacaError = (halamanDibaca == "" || halamanDibaca.toFloat() > totalHalaman.toFloat() || halamanDibaca.toFloat() < 0)
-                if (judulError || penulisError || totalHalamanError || halamanDibacaError) return@Button
+                judulError = judul.isEmpty()
+                penulisError = penulis.isEmpty()
 
+                try {
+                    totalHalaman.toFloat()
+                    totalHalamanError = totalHalaman.isEmpty() || totalHalaman.toFloat() <= 0
+                } catch (e: NumberFormatException) {
+                    totalHalamanError = true
+                }
+                try {
+                    halamanDibaca.toFloat()
+                    halamanDibacaError = halamanDibaca.isEmpty() || halamanDibaca.toFloat() > totalHalaman.toFloat() || halamanDibaca.toFloat() < 0
+                } catch (e: NumberFormatException) {
+                    halamanDibacaError = true
+                }
+
+                if (judulError || penulisError || totalHalamanError || halamanDibacaError) return@Button
                 progres = hitungProgres(totalHalaman.toFloat(), halamanDibaca.toFloat())
                 status = getStatus(progres)
             },

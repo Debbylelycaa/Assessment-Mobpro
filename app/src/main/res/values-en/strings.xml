@@ -16,7 +16,7 @@
     <string name="share">Share</string>
     <string name="sedang_dibaca">Currently reading.</string>
     <string name="selesai">Done reading.</string>
-    <string name="input_invalid">It cannot be empty, please fill it in with appropriate input.</string>
+    <string name="input_invalid">Please fill it in with appropriate input.</string>
     <string name="halaman_dibaca">Pages Read</string>
     <string name="add">Add Book</string>
     <string name="tambah_buku">Add reading books</string>
