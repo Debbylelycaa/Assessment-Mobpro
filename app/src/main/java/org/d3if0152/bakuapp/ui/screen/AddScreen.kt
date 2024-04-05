@@ -1,5 +1,6 @@
 package org.d3if0152.bakuapp.ui.screen
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
@@ -33,12 +34,10 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -82,6 +81,7 @@ fun AddScreen(navController: NavHostController){
     }
 }
 
+@SuppressLint("StringFormatMatches")
 @Composable
 fun AddContent(modifier: Modifier){
     var judul by remember {
@@ -262,25 +262,19 @@ fun AddContent(modifier: Modifier){
             Text(text = stringResource(status).uppercase(),
                 style = MaterialTheme.typography.bodyMedium)
 
-//            val shareMessage = stringResource(
-//                id = R.string.bagikan_progress,
-//                kategori,
-//                judul,
-//                progres
-//            )
-//
-//            Button(
-//                onClick = {
-//                    shareData(
-//                        context = context,
-//                        message = shareMessage
-//                    )
-//                },
-//                modifier = Modifier.padding(top = 8.dp),
-//                contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp)
-//            ){
-//                Text(text = stringResource(R.string.share))
-//            }
+            Button(
+                onClick = {
+                    shareData(
+                        context = context,
+                        message = context.getString(R.string.bagikan_progress,
+                            kategori, judul, progres)
+                    )
+                },
+                modifier = Modifier.padding(top = 8.dp),
+                contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp)
+            ){
+                Text(text = stringResource(R.string.share))
+            }
         }
     }
 }
@@ -312,15 +306,15 @@ private fun getStatus(progres : Float) : Int {
     }
 }
 
-//private fun shareData(context: Context, message: String){
-//    val shareIntent = Intent(Intent.ACTION_SEND).apply {
-//        type = "text/plain"
-//        putExtra(Intent.EXTRA_TEXT, message)
-//    }
-//    if (shareIntent.resolveActivity(context.packageManager) != null){
-//        context.startActivity(shareIntent)
-//    }
-//}
+private fun shareData(context: Context, message: String){
+    val shareIntent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT, message)
+    }
+    if (shareIntent.resolveActivity(context.packageManager) != null){
+        context.startActivity(shareIntent)
+    }
+}
 
 @Composable
 fun IconPicker(isError: Boolean, unit: String){

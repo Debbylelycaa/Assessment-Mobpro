@@ -11,7 +11,7 @@
     <string name="total_halaman">Total Halaman</string>
     <string name="simpan">Tambah</string>
     <string name="progres_x">Progress : %1$.2f %%</string>
-    <string name="bagikan_progress">Hai! Saat ini saya membaca buku %1$s berjudul %2$s dari penulis %3$s dengan progress %4$.2f %%!</string>
+    <string name="bagikan_progress">Hai! Saat ini saya membaca buku %1$s berjudul %2$s dengan progress %3$.2f %%!</string>
     <string name="share">Bagikan</string>
     <string name="sedang_dibaca">Sedang dibaca.</string>
     <string name="selesai">Selesai dibaca.</string>

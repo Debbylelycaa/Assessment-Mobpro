@@ -12,7 +12,7 @@
     <string name="total_halaman">Pages</string>
     <string name="simpan">Add</string>
     <string name="progres_x">Progress: %1$.2f %%</string>
-    <string name="bagikan_progress">Hi! I\'m currently reading %1$s book entitled %1$s with %1$.2f %% progress!</string>
+    <string name="bagikan_progress">Hi! I\'m currently reading %1$s book entitled %2$s with %3$.2f %% progress!</string>
     <string name="share">Share</string>
     <string name="sedang_dibaca">Currently reading.</string>
     <string name="selesai">Done reading.</string>
