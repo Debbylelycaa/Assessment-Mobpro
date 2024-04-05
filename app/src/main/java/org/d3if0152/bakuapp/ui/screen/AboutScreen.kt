@@ -19,6 +19,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,6 +32,8 @@ import org.d3if0152.bakuapp.ui.theme.BaKuAppTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AboutScreen(navController: NavHostController){
+    val brownColor = Color(0xFFC08261)
+    val maroonColor = Color(0xFF9A3B3B)
     Scaffold(
         topBar = {
             TopAppBar(
@@ -39,7 +42,7 @@ fun AboutScreen(navController: NavHostController){
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.back),
-                            tint = MaterialTheme.colorScheme.primary
+                            tint = maroonColor
                         )
                     }
                 },
@@ -47,8 +50,8 @@ fun AboutScreen(navController: NavHostController){
                     Text(text = stringResource(id = R.string.about_app))
                 },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.primary,
+                    containerColor = brownColor,
+                    titleContentColor = maroonColor
                 )
             )
         }

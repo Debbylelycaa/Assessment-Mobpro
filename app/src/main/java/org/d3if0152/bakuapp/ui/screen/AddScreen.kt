@@ -21,6 +21,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -57,6 +58,8 @@ import org.d3if0152.bakuapp.ui.theme.BaKuAppTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddScreen(navController: NavHostController){
+    val brownColor = Color(0xFFC08261)
+    val maroonColor = Color(0xFF9A3B3B)
     Scaffold(
         topBar = {
             TopAppBar(
@@ -65,14 +68,14 @@ fun AddScreen(navController: NavHostController){
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.back),
-                            tint = MaterialTheme.colorScheme.primary
+                            tint = maroonColor
                         )
                     }
                 },
                 title = { Text(text = stringResource(id = R.string.add)) },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.primary,
+                    containerColor = brownColor,
+                    titleContentColor = maroonColor,
                 )
             )
         }
@@ -84,6 +87,9 @@ fun AddScreen(navController: NavHostController){
 @SuppressLint("StringFormatMatches")
 @Composable
 fun AddContent(modifier: Modifier){
+    val brownColor = Color(0xFFC08261)
+    val maroonColor = Color(0xFF9A3B3B)
+
     var judul by remember {
         mutableStateOf("")
     }
@@ -241,6 +247,10 @@ fun AddContent(modifier: Modifier){
                 progres = hitungProgres(totalHalaman.toFloat(), halamanDibaca.toFloat())
                 status = getStatus(progres)
             },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = brownColor,
+                contentColor = maroonColor
+            ),
             modifier = Modifier.padding(top = 8.dp),
             contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp)
         ) {
@@ -281,6 +291,10 @@ fun AddContent(modifier: Modifier){
                             kategori, judul, progres)
                     )
                 },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = brownColor,
+                    contentColor = maroonColor
+                ),
                 modifier = Modifier.padding(top = 8.dp),
                 contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp)
             ){

@@ -19,7 +19,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -27,6 +26,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -41,13 +41,15 @@ import org.d3if0152.bakuapp.navigation.Screen
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(navController: NavHostController){
+    val brownColor = Color(0xFFC08261)
+    val maroonColor = Color(0xFF9A3B3B)
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text(text = stringResource(id = R.string.app_name)) },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.primary,
+                    containerColor = brownColor,
+                    titleContentColor = maroonColor,
                 ),
                 actions = {
                     IconButton(onClick = {
@@ -57,7 +59,7 @@ fun MainScreen(navController: NavHostController){
                         Icon(
                             imageVector = Icons.Outlined.Info,
                             contentDescription = stringResource(R.string.about_app),
-                            tint = MaterialTheme.colorScheme.primary
+                            tint = maroonColor
                         )
                     }
                 }
@@ -69,7 +71,7 @@ fun MainScreen(navController: NavHostController){
                 Icon(
                     imageVector = Icons.Filled.Add,
                     contentDescription = stringResource(R.string.tambah_buku),
-                    tint = MaterialTheme.colorScheme.primary
+                    tint = maroonColor
                 )
             }
         }
@@ -82,7 +84,7 @@ fun ScreenContent(modifier: Modifier){
     val viewModel : MainViewModel = viewModel()
     val data = viewModel.data
     val context = LocalContext.current
-//    val data = emptyList<Catatan>()
+//    val data = emptyList<Books>()
 
     if ( data.isEmpty()){
         Column (
