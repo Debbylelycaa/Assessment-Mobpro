@@ -31,10 +31,15 @@
     <string name="penulis">"Penulis : "</string>
     <string name="kategoriList">"Kategori : "</string>
     <string name="baku_image_description">Ikon BaKu</string>
-    <string name="about_dev">BaKu dikembangkan dengan tujuan pemenuhan assessment 1 mata kuliah Pemrograman untuk Perangkat Bergerak 1; atas nama Debby Lelyca Rohdearni dengan NIM 6706220152 dari kelas 46-01.</string>
+    <string name="about_dev">BaKu dikembangkan dengan tujuan pemenuhan assessment mata kuliah Pemrograman untuk Perangkat Bergerak 1; atas nama Debby Lelyca Rohdearni dengan NIM 6706220152 dari kelas 46-01.</string>
     <string name="simpan">SIMPAN</string>
     <string name="update">Perbarui Bacaan</string>
     <string name="invalid">Data tidak boleh kosong!</string>
     <string name="lainnya">Lainnya</string>
     <string name="hapus">Hapus buku bacaan</string>
+    <string name="pesan_hapus">Hapus Buku Bacaan?</string>
+    <string name="tombol_hapus">Hapus</string>
+    <string name="tombol_batal">Batal</string>
+    <string name="list">Tampilan list</string>
+    <string name="grid">Tampilan grid</string>
 </resources>

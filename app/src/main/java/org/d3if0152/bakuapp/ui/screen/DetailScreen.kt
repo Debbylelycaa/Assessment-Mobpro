@@ -86,6 +86,10 @@ fun DetailScreen(navController: NavHostController, id: Long? = null){
         mutableStateOf("")
     }
 
+    var showDialog by remember {
+        mutableStateOf(false)
+    }
+
     LaunchedEffect(true){
         if(id == null) return@LaunchedEffect
         val data = viewModel.getBuku(id)?: return@LaunchedEffect
@@ -139,7 +143,9 @@ fun DetailScreen(navController: NavHostController, id: Long? = null){
                         )
                     }
                     if (id != null){
-                        DeleteAction {
+                        DeleteAction { showDialog = true }
+                        DisplayAlertDialog(openDialog = showDialog, onDismissRequest = { showDialog = false }) {
+                            showDialog = false
                             viewModel.delete(id)
                             navController.popBackStack()
                         }

@@ -2,7 +2,7 @@ package org.d3if0152.bakuapp.ui.screen
 
 import MainViewModel
 import android.content.res.Configuration
-import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -15,15 +15,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -46,10 +50,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import org.d3if0152.bakuapp.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.d3if0152.bakuapp.database.BooksDb
 import org.d3if0152.bakuapp.model.Books
 import org.d3if0152.bakuapp.navigation.Screen
 import org.d3if0152.bakuapp.ui.theme.BaKuAppTheme
+import org.d3if0152.bakuapp.util.SettingsDataStore
 import org.d3if0152.bakuapp.util.ViewModelFactory
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -57,6 +65,11 @@ import org.d3if0152.bakuapp.util.ViewModelFactory
 fun MainScreen(navController: NavHostController){
     val brownColor = Color(0xFFE2C799)
     val maroonColor = Color(0xFF9A3B3B)
+
+    val dataStore = SettingsDataStore(LocalContext.current)
+    val showList by dataStore.layoutFlow.collectAsState(true)
+
+
     Scaffold(
         modifier = Modifier.background(Color(0xFFFEECE2)),
         topBar = {
@@ -66,18 +79,34 @@ fun MainScreen(navController: NavHostController){
                     containerColor = brownColor,
                     titleContentColor = maroonColor,
                 ),
-                actions = {
-                    IconButton(onClick = {
-                        navController.navigate(Screen.About.route)
+            actions = {
+
+                IconButton(onClick = {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        dataStore.saveLayout(!showList)
                     }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Outlined.Info,
-                            contentDescription = stringResource(R.string.about_app),
-                            tint = maroonColor
-                        )
-                    }
+                }) {                    Icon(
+                        painter = painterResource(
+                            if(showList) R.drawable.baseline_grid_view_24
+                            else R.drawable.baseline_view_list_24
+                        ),
+                        contentDescription = stringResource(
+                            if (showList) R.string.grid
+                            else R.string.list
+                        ), tint = maroonColor
+                    )
                 }
+                IconButton(onClick = {
+                    navController.navigate(Screen.About.route)
+                }
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.Info,
+                        contentDescription = stringResource(R.string.about_app),
+                        tint = maroonColor
+                    )
+                }
+            }
             )
         },
         floatingActionButton = {
@@ -94,11 +123,13 @@ fun MainScreen(navController: NavHostController){
             }
         }
     ) { padding ->
-        ScreenContent(Modifier.padding(padding), navController)
+        ScreenContent(showList, Modifier.padding(padding), navController)
     }
 }
 @Composable
-fun ScreenContent(modifier: Modifier, navController: NavHostController){
+fun ScreenContent(showList: Boolean, modifier: Modifier, navController: NavHostController){
+
+    val maroonColor = Color(0xFF9A3B3B)
 
     val context = LocalContext.current
     val db = BooksDb.getInstance(context)
@@ -122,19 +153,36 @@ fun ScreenContent(modifier: Modifier, navController: NavHostController){
             Text(
                 text = stringResource(id = R.string.list_kosong),
 //                style = MaterialTheme.typography.body1,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                color = maroonColor
             )
         }
     }  else {
-        LazyColumn(
-            modifier = modifier.fillMaxSize(),
-            contentPadding = PaddingValues(bottom = 84.dp)
-        ){
-            items(data){
-                BooksList(books = it){
-                  navController.navigate(Screen.FormUbah.withId(it.id))
+        if (showList) {
+            LazyColumn(
+                modifier = modifier.fillMaxSize(),
+                contentPadding = PaddingValues(bottom = 84.dp)
+            ) {
+                items(data) {
+                    BooksList(books = it) {
+                        navController.navigate(Screen.FormUbah.withId(it.id))
+                    }
+                    Divider()
                 }
-                Divider()
+            }
+        } else {
+            LazyVerticalStaggeredGrid(
+                modifier = modifier.fillMaxSize(),
+                columns = StaggeredGridCells.Fixed(2),
+                verticalItemSpacing = 8.dp,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                contentPadding = PaddingValues(8.dp, 8.dp, 8.dp, 84.dp)
+            ){
+                items(data){
+                    GridItem(books = it) {
+                        navController.navigate(Screen.FormUbah.withId(it.id))
+                    }
+                }
             }
         }
     }
@@ -177,6 +225,54 @@ fun BooksList(books: Books, onClick: () -> Unit){
             color = maroonColor
 
         )
+    }
+}
+
+@Composable
+fun GridItem(books: Books, onClick: () -> Unit){
+    val yellow = Color(0xFFF2ECBE)
+    val maroonColor = Color(0xFF9A3B3B)
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onClick() },
+        colors = CardDefaults.cardColors(
+            containerColor = yellow,
+        ),
+        border = BorderStroke(1.dp, maroonColor)
+    ){
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+        )
+        {
+            Text(
+                text = books.judul,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                fontWeight = FontWeight.Bold,
+                color = maroonColor
+            )
+            Text(
+                text = books.penulis,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                color = maroonColor
+
+            )
+            Text(
+                text = books.kategori,
+                color = maroonColor
+
+            )
+            Text(
+                text = "${books.dibaca}/${books.totalHalaman} ${stringResource(id = R.string.laman)}",
+                color = maroonColor
+            )
+        }
+
     }
 }
 

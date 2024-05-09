@@ -15,7 +15,7 @@ interface BooksDao {
     @Update
     suspend fun update(books: Books)
 
-    @Query("SELECT * FROM books ORDER BY judul DESC")
+    @Query("SELECT * FROM books ORDER BY judul ASC")
     fun getBuku(): Flow<List<Books>>
 
     @Query("SELECT * FROM books ORDER BY id = :id")
