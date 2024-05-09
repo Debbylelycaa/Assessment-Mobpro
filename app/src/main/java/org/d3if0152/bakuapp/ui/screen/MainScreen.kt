@@ -85,11 +85,11 @@ fun MainScreen(navController: NavHostController){
             }
         }
     ) { padding ->
-        ScreenContent(Modifier.padding(padding))
+        ScreenContent(Modifier.padding(padding), navController)
     }
 }
 @Composable
-fun ScreenContent(modifier: Modifier){
+fun ScreenContent(modifier: Modifier, navController: NavHostController){
 
     val viewModel : MainViewModel = viewModel()
     val data = viewModel.data
@@ -113,8 +113,7 @@ fun ScreenContent(modifier: Modifier){
         ){
             items(data){
                 BooksList(books = it){
-                    val pesan = context.getString(R.string.x_diklik, it.judul)
-                    Toast.makeText(context, pesan, Toast.LENGTH_SHORT).show()
+                  navController.navigate(Screen.Edit.withId(it.id))
                 }
                 Divider()
             }

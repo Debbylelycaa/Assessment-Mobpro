@@ -33,4 +33,6 @@
     <string name="baku_image_description">Ikon BaKu</string>
     <string name="about_dev">BaKu dikembangkan dengan tujuan pemenuhan assessment 1 mata kuliah Pemrograman untuk Perangkat Bergerak 1; atas nama Debby Lelyca Rohdearni dengan NIM 6706220152 dari kelas 46-01.</string>
     <string name="simpan">SIMPAN</string>
+    <string name="edit">Perbarui Bacaan</string>
+    <string name="invalid">Data tidak boleh kosong!</string>
 </resources>
