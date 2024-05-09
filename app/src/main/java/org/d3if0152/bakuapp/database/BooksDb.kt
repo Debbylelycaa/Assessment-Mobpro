@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import org.d3if0152.bakuapp.model.Books
 
-@Database(entities = [Books::class], version = 1, exportSchema = false)
+@Database(entities = [Books::class], version = 2, exportSchema = false)
 abstract class BooksDb : RoomDatabase() {
     abstract val dao: BooksDao
     companion object{
@@ -22,7 +22,8 @@ abstract class BooksDb : RoomDatabase() {
                         context.applicationContext,
                         BooksDb::class.java,
                         "books.db"
-                    ).build()
+                    ).fallbackToDestructiveMigration()
+                        .build()
                     INSTANCE = instance
                 }
                 return instance

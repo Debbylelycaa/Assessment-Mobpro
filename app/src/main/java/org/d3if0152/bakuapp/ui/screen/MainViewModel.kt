@@ -1,26 +1,15 @@
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
+import org.d3if0152.bakuapp.database.BooksDao
 import org.d3if0152.bakuapp.model.Books
 
-class MainViewModel : ViewModel() {
-
-    val data = getDataDummy()
-
-    companion object {
-        fun getDataDummy(): List<Books> {
-            val data = mutableListOf<Books>()
-            for (i in 29 downTo 20) {
-                data.add(
-                    Books(
-                        i.toLong(),
-                        "Bumi",
-                        "Joe Davidson",
-                        "Fiksi",
-                        76,
-                        54
-                    )
-                )
-            }
-            return data
-        }
-    }
+class MainViewModel (dao: BooksDao) : ViewModel() {
+    val data: StateFlow<List<Books>> = dao.getBuku().stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000L),
+        initialValue = emptyList()
+    )
 }
