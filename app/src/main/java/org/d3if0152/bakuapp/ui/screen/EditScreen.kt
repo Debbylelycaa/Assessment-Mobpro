@@ -39,6 +39,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import org.d3if0152.bakuapp.R
@@ -49,8 +50,12 @@ const val KEY_ID_BUKU = "idBooks"
 @Composable
 fun EditScreen(navController: NavHostController, id: Long? = null){
 
+    val viewModel : EditlViewModel = viewModel()
+
     val brownColor = Color(0xFFE2C799)
     val maroonColor = Color(0xFF9A3B3B)
+
+
 
     var judul by remember {
         mutableStateOf("")
@@ -69,9 +74,19 @@ fun EditScreen(navController: NavHostController, id: Long? = null){
         mutableStateOf("")
     }
 
-    var halamanDibaca by remember {
+    var dibaca by remember {
         mutableStateOf("")
     }
+
+    if (id != null){
+        val data = viewModel.getBuku(id)
+        judul = data.judul
+        penulis = data.penulis
+        kategori = data.kategori
+        totalHalaman = data.totalHalaman.toString() // Mengubah Int menjadi String
+        dibaca = data.dibaca.toString() // Mengubah Int menjadi String
+    }
+
 
     Scaffold(
         modifier = Modifier.background(Color(0xFFFEECE2)),
@@ -112,8 +127,8 @@ FormBuku(
     onCategoryChange = { kategori = it },
     pages = totalHalaman,
     onPagesChange = { totalHalaman = it },
-    current = halamanDibaca ,
-    onCurrentChange = { halamanDibaca = it },
+    current = dibaca ,
+    onCurrentChange = { dibaca = it },
     modifier = Modifier.padding(padding)
 )
     }
