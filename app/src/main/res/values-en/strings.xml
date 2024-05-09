@@ -34,4 +34,8 @@
     <string name="kategoriList">"Category : "</string>
     <string name="baku_image_description">BaKu Icons</string>
     <string name="about_dev">BaKu was developed with the aim of fulfilling assessment 1 of the Programming for Mobile Devices 1 course; on behalf of Debby Lelyca Rohdearni with ID 6706220152 from class 46- 01.</string>
+    <string name="update">"Update Reading "</string>
+    <string name="invalid">Data cannot be empty!</string>
+    <string name="lainnya">Other</string>
+    <string name="hapus">Delete book</string>
 </resources>

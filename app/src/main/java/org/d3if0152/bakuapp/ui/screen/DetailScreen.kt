@@ -1,6 +1,7 @@
 package org.d3if0152.bakuapp.ui.screen
 
 import android.content.res.Configuration
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -14,7 +15,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.outlined.Check
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -26,6 +30,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,6 +38,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.ImeAction
@@ -43,19 +49,21 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import org.d3if0152.bakuapp.R
+import org.d3if0152.bakuapp.database.BooksDb
 import org.d3if0152.bakuapp.ui.theme.BaKuAppTheme
+import org.d3if0152.bakuapp.util.ViewModelFactory
 
 const val KEY_ID_BUKU = "idBooks"
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EditScreen(navController: NavHostController, id: Long? = null){
-
-    val viewModel : EditlViewModel = viewModel()
+fun DetailScreen(navController: NavHostController, id: Long? = null){
+    val context = LocalContext.current
+    val db = BooksDb.getInstance(context)
+    val factory = ViewModelFactory(db.dao)
+    val viewModel : DetailViewModel = viewModel(factory = factory)
 
     val brownColor = Color(0xFFE2C799)
     val maroonColor = Color(0xFF9A3B3B)
-
-
 
     var judul by remember {
         mutableStateOf("")
@@ -78,8 +86,9 @@ fun EditScreen(navController: NavHostController, id: Long? = null){
         mutableStateOf("")
     }
 
-    if (id != null){
-        val data = viewModel.getBuku(id)
+    LaunchedEffect(true){
+        if(id == null) return@LaunchedEffect
+        val data = viewModel.getBuku(id)?: return@LaunchedEffect
         judul = data.judul
         penulis = data.penulis
         kategori = data.kategori
@@ -101,18 +110,39 @@ fun EditScreen(navController: NavHostController, id: Long? = null){
                         )
                     }
                 },
-                title = { Text(text = stringResource(id = R.string.edit)) },
+                title = {
+                    if (id == null)
+                        Text(text = stringResource(id = R.string.tambah_buku))
+                    else
+                        Text(text = stringResource(id = R.string.update))
+                        },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
                     containerColor = brownColor,
                     titleContentColor = maroonColor,
                 ),
                 actions = {
-                    IconButton(onClick = {navController.popBackStack()}){
+                    IconButton(onClick = {
+                        if (judul == "" || penulis =="" || kategori =="" || totalHalaman =="" || dibaca ==""){
+                            Toast.makeText(context, R.string.invalid, Toast.LENGTH_LONG).show()
+                            return@IconButton
+                        }
+                        if (id == null){
+                            viewModel.insert(judul, penulis, kategori, totalHalaman.toInt(), dibaca.toInt())
+                        } else {
+                            viewModel.update(judul, penulis, kategori, totalHalaman.toInt(), dibaca.toInt())
+                        }
+                        navController.popBackStack() }) {
                         Icon(
                             imageVector = Icons.Outlined.Check,
-                            contentDescription = stringResource(R.string.simpan),
-                            tint = MaterialTheme.colorScheme.primary
+                            contentDescription = stringResource(R.string.add),
+                            tint = maroonColor
                         )
+                    }
+                    if (id != null){
+                        DeleteAction {
+                            viewModel.delete(id)
+                            navController.popBackStack()
+                        }
                     }
                 }
             )
@@ -123,8 +153,6 @@ FormBuku(
     onTitleChange = { judul = it },
     author = penulis,
     onAuthorChange = { penulis = it },
-    category = kategori,
-    onCategoryChange = { kategori = it },
     pages = totalHalaman,
     onPagesChange = { totalHalaman = it },
     current = dibaca ,
@@ -139,12 +167,13 @@ FormBuku(
 fun FormBuku(
     title: String, onTitleChange: (String) -> Unit,
     author: String, onAuthorChange: (String) -> Unit,
-    category: String, onCategoryChange: (String) -> Unit,
     pages: String, onPagesChange: (String) -> Unit,
     current: String, onCurrentChange: (String) -> Unit,
     modifier: Modifier
 
 ){
+    val maroonColor = Color(0xFF9A3B3B)
+
     val radioOptions = listOf(
         stringResource(id = R.string.fiksi),
         stringResource(id = R.string.nonfiksi)
@@ -163,7 +192,7 @@ fun FormBuku(
         OutlinedTextField(
             value = title,
             onValueChange = {  onTitleChange(it)},
-            label = { Text (text = stringResource(R.string.judul_buku))},
+            label = { Text (text = stringResource(R.string.judul_buku), color = maroonColor)},
             singleLine = true,
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next
@@ -176,7 +205,7 @@ fun FormBuku(
         OutlinedTextField(
             value = author,
             onValueChange = { onAuthorChange(it)},
-            label = { Text (text = stringResource(R.string.penulis_buku))},
+            label = { Text (text = stringResource(R.string.penulis_buku), color = maroonColor)},
             singleLine = true,
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next
@@ -211,7 +240,7 @@ fun FormBuku(
         OutlinedTextField(
             value = pages,
             onValueChange = { onPagesChange(it) },
-            label = { Text (text = stringResource(R.string.total_halaman))},
+            label = { Text (text = stringResource(R.string.total_halaman), color = maroonColor)},
             singleLine = true,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
@@ -225,7 +254,7 @@ fun FormBuku(
         OutlinedTextField(
             value = current,
             onValueChange = { onCurrentChange(it) },
-            label = { Text (text = stringResource(R.string.halaman_dibaca))},
+            label = { Text (text = stringResource(R.string.halaman_dibaca), color = maroonColor)},
             singleLine = true,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
@@ -239,6 +268,8 @@ fun FormBuku(
 }
 @Composable
 fun KategoriOpsi(label: String, isSelected: Boolean, modifier: Modifier){
+    val maroonColor = Color(0xFF9A3B3B)
+
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
@@ -247,15 +278,46 @@ fun KategoriOpsi(label: String, isSelected: Boolean, modifier: Modifier){
         Text(
             text = label,
             style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.padding(start = 8.dp)
+            modifier = Modifier.padding(start = 8.dp),
+            color = maroonColor
         )
     }
 }
+
+
+@Composable
+fun DeleteAction(delete: () -> Unit){
+    val maroonColor = Color(0xFF9A3B3B)
+
+    var expanded by remember {
+        mutableStateOf(false)
+    }
+
+    IconButton(onClick = { expanded = true }) {
+        Icon(
+            imageVector = Icons.Filled.MoreVert,
+            contentDescription = stringResource(R.string.lainnya),
+            tint = MaterialTheme.colorScheme.primary
+        )
+        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+            DropdownMenuItem(
+                text = {
+                    Text(text = stringResource(id = R.string.hapus), color = maroonColor)
+                },
+                onClick = {
+                    expanded = false
+                    delete()
+                }
+            )
+        }
+    }
+}
+
 @Preview(showBackground = true)
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Composable
 fun DetailScreenPreview() {
     BaKuAppTheme {
-        EditScreen(rememberNavController())
+        DetailScreen(rememberNavController())
     }
 }

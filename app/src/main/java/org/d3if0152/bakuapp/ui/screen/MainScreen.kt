@@ -82,7 +82,7 @@ fun MainScreen(navController: NavHostController){
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = {navController.navigate(Screen.Add.route)},
+                onClick = {navController.navigate(Screen.FormBaru.route) },
                 Modifier.background(brownColor)
             )
             {
@@ -132,7 +132,7 @@ fun ScreenContent(modifier: Modifier, navController: NavHostController){
         ){
             items(data){
                 BooksList(books = it){
-                  navController.navigate(Screen.Edit.withId(it.id))
+                  navController.navigate(Screen.FormUbah.withId(it.id))
                 }
                 Divider()
             }
