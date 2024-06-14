@@ -29,9 +29,9 @@
     <string name="kategori">Category : %1$s</string>
     <string name="total_halaman_x">Pages : %1$s</string>
     <string name="halaman_dibaca_x">Currently reading : %1$s</string>
-    <string name="judul">"Title : "</string>
-    <string name="penulis">"Author : "</string>
-    <string name="kategoriList">"Category : "</string>
+    <string name="judul">Title</string>
+    <string name="penulis">Author</string>
+    <string name="kategoriList">"Category "</string>
     <string name="baku_image_description">BaKu Icons</string>
     <string name="about_dev">BaKu was developed with the aim of fulfilling assessment of the Programming for Mobile Devices 1 course; on behalf of Debby Lelyca Rohdearni with ID 6706220152 from class 46- 01.</string>
     <string name="update">"Update Reading "</string>
@@ -43,4 +43,11 @@
     <string name="tombol_batal">Cancel</string>
     <string name="list">List view</string>
     <string name="grid">Grid view</string>
+    <string name="gambar">Picture %1$s</string>
+    <string name="error">Failed to load data... Connection Error</string>
+    <string name="try_again">Try Again</string>
+    <string name="profil">Profile</string>
+    <string name="tutup">Close</string>
+    <string name="logout">Exit</string>
+    <string name="batal">Cancel</string>
 </resources>

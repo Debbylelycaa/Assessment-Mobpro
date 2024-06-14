@@ -5,11 +5,11 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName= "books")
 data class Books(
-    @PrimaryKey(autoGenerate = true)
-    val id: Long = 0L,
-    val judul: String,
-    val penulis: String,
+    @PrimaryKey val id: String,
+    val judulBuku: String,
+    val userId: String,
     val kategori: String,
     val totalHalaman: Int,
-    val dibaca: Int
+    val imageId: String,
+//    val mine: Int
 )
