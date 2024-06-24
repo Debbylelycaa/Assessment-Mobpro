@@ -18,6 +18,8 @@ fun DisplayAlertDialog(
     onConfirmation: () -> Unit
 ) {
     val maroonColor = Color(0xFF9A3B3B)
+    val yellow = Color(0xFFF2ECBE)
+
 
     if (openDialog){
         AlertDialog(
@@ -32,7 +34,8 @@ fun DisplayAlertDialog(
                     Text(text = stringResource(R.string.tombol_batal), color = maroonColor)
                 }
             },
-            onDismissRequest = { onDismissRequest ()}
+            onDismissRequest = { onDismissRequest ()},
+            containerColor = yellow
         )
     }
 }

@@ -96,8 +96,8 @@ fun DetailScreen(navController: NavHostController, id: Long? = null){
         judul = data.judul
         penulis = data.penulis
         kategori = data.kategori
-        totalHalaman = data.totalHalaman.toString() // Mengubah Int menjadi String
-        dibaca = data.dibaca.toString() // Mengubah Int menjadi String
+        totalHalaman = data.totalHalaman.toString()
+        dibaca = data.dibaca.toString()
     }
 
 
@@ -126,16 +126,24 @@ fun DetailScreen(navController: NavHostController, id: Long? = null){
                 ),
                 actions = {
                     IconButton(onClick = {
-                        if (judul == "" || penulis =="" || kategori =="" || totalHalaman =="" || dibaca ==""){
+                        if (judul == "" || penulis == "" || kategori == "" || totalHalaman == "" || dibaca == "") {
                             Toast.makeText(context, R.string.invalid, Toast.LENGTH_LONG).show()
                             return@IconButton
                         }
-                        if (id == null){
+                        if (totalHalaman.toInt() <= 0 || dibaca.toInt() > totalHalaman.toInt() || dibaca.toInt() < 0 || totalHalaman.toIntOrNull() == null || dibaca.toIntOrNull() == null){
+                            Toast.makeText(context, R.string.invalidinput, Toast.LENGTH_LONG).show()
+                            return@IconButton
+                        }
+
+                        if (id == null) {
                             viewModel.insert(judul, penulis, kategori, totalHalaman.toInt(), dibaca.toInt())
                         } else {
-                            viewModel.update(judul, penulis, kategori, totalHalaman.toInt(), dibaca.toInt())
+
+                            viewModel.update(id!!, judul, penulis, kategori, totalHalaman.toInt(), dibaca.toInt())
                         }
-                        navController.popBackStack() }) {
+                        navController.previousBackStackEntry?.savedStateHandle?.set("refresh", true)
+                        navController.popBackStack()
+                    }) {
                         Icon(
                             imageVector = Icons.Outlined.Check,
                             contentDescription = stringResource(R.string.add),
@@ -159,6 +167,8 @@ FormBuku(
     onTitleChange = { judul = it },
     author = penulis,
     onAuthorChange = { penulis = it },
+    kategori =kategori,
+    onKategoriChange = {kategori = it},
     pages = totalHalaman,
     onPagesChange = { totalHalaman = it },
     current = dibaca ,
@@ -173,18 +183,17 @@ FormBuku(
 fun FormBuku(
     title: String, onTitleChange: (String) -> Unit,
     author: String, onAuthorChange: (String) -> Unit,
+    kategori: String, onKategoriChange: (String) -> Unit,
     pages: String, onPagesChange: (String) -> Unit,
     current: String, onCurrentChange: (String) -> Unit,
     modifier: Modifier
-
-){
+) {
     val maroonColor = Color(0xFF9A3B3B)
 
     val radioOptions = listOf(
         stringResource(id = R.string.fiksi),
         stringResource(id = R.string.nonfiksi)
     )
-    var kategori by remember { mutableStateOf(radioOptions[0]) }
 
     Column (
         modifier = modifier
@@ -229,16 +238,17 @@ fun FormBuku(
         ){
             radioOptions.forEach{ text ->
                 KategoriOpsi(
-                    label = text ,
+                    label = text,
                     isSelected = kategori == text,
                     modifier = Modifier
                         .selectable(
                             selected = kategori == text,
-                            onClick = { kategori = text },
+                            onClick = { onKategoriChange(text) },
                             role = Role.RadioButton
                         )
                         .weight(1f)
-                        .padding(16.dp)
+                        .padding(16.dp),
+                    onValueChange = { onKategoriChange(it) }
                 )
             }
         }
@@ -272,15 +282,16 @@ fun FormBuku(
         )
     }
 }
+
 @Composable
-fun KategoriOpsi(label: String, isSelected: Boolean, modifier: Modifier){
+fun KategoriOpsi(label: String, isSelected: Boolean, modifier: Modifier, onValueChange: (String) -> Unit){
     val maroonColor = Color(0xFF9A3B3B)
 
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ){
-        RadioButton(selected = isSelected, onClick = null)
+        RadioButton(selected = isSelected, onClick = { onValueChange(label) })
         Text(
             text = label,
             style = MaterialTheme.typography.bodyLarge,

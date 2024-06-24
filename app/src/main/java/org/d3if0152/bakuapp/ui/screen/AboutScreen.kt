@@ -68,11 +68,14 @@ fun AboutScreen(navController: NavHostController){
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = stringResource(R.string.copyright),
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(16.dp),
+                color = maroonColor
             )
             Text(
                 text = stringResource(R.string.about_dev),
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(16.dp),
+                color = maroonColor
+
             )
         }
     }

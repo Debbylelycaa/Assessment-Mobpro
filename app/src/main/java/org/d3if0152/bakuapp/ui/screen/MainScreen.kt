@@ -111,8 +111,7 @@ fun MainScreen(navController: NavHostController){
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = {navController.navigate(Screen.FormBaru.route) },
-                Modifier.background(brownColor)
+                onClick = {navController.navigate(Screen.FormBaru.route) }, containerColor = brownColor
             )
             {
                 Icon(
@@ -245,7 +244,7 @@ fun GridItem(books: Books, onClick: () -> Unit){
 
         Column(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxWidth().padding(16.dp)
         )
         {
             Text(

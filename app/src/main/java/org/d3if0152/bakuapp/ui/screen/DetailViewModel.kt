@@ -8,13 +8,13 @@ import org.d3if0152.bakuapp.database.BooksDao
 import org.d3if0152.bakuapp.model.Books
 
 class DetailViewModel (private val dao : BooksDao) : ViewModel() {
-    fun insert(judul: String, penulis: String, kategori: String, totalHalaman: Int, halamanDibaca: Int){
+    fun insert(judul: String, penulis: String, kategori: String, totalHalaman: Int, dibaca: Int){
         val books = Books(
             judul = judul,
             penulis = penulis,
             kategori = kategori,
             totalHalaman = totalHalaman,
-            dibaca = halamanDibaca
+            dibaca = dibaca
         )
 
         viewModelScope.launch(Dispatchers.IO) {
@@ -25,16 +25,17 @@ class DetailViewModel (private val dao : BooksDao) : ViewModel() {
         return dao.getBukuById(id)
     }
 
-    fun update(judul: String, penulis: String, kategori: String, totalHalaman: Int, halamanDibaca: Int){
+    fun update(id: Long, judul: String, penulis: String, kategori: String, totalHalaman: Int, dibaca: Int){
         val books = Books(
+            id = id, // Set the id field
             judul = judul,
             penulis = penulis,
             kategori = kategori,
             totalHalaman = totalHalaman,
-            dibaca = halamanDibaca
+            dibaca = dibaca
         )
 
-        viewModelScope.launch (Dispatchers.IO){
+        viewModelScope.launch(Dispatchers.IO){
             dao.update(books)
         }
     }
