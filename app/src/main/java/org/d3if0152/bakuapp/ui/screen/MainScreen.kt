@@ -225,7 +225,7 @@ fun ScreenContent(viewModel: MainViewModel, IdPengguna: String, modifier: Modifi
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center,
 
-            )
+                )
             {
                 CircularProgressIndicator()
             }

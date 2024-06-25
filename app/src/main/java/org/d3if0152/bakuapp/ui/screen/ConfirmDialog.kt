@@ -58,11 +58,11 @@ fun ConfirmDialog(
                         OutlinedButton(
                             onClick = { onDismissRequest() },
                             modifier = Modifier.padding(8.dp),
-                            border = BorderStroke(1.dp, Color(0xFFE2C799))
+                            border = BorderStroke(1.dp, Color(0xFF9A3B3B))
 
                         ) {
                             Text(text = stringResource(R.string.batal),
-                                color = Color(0xFFE2C799))
+                                color = Color(0xFF9A3B3B))
 
                         }
                         OutlinedButton(

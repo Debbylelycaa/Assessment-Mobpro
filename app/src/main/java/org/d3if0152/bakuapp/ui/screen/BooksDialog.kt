@@ -1,6 +1,8 @@
 package org.d3if0152.bakuapp.ui.screen
+
 import android.content.res.Configuration
 import android.graphics.Bitmap
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -25,9 +27,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -41,6 +45,7 @@ fun BooksDialog(
     onSave: (String, String, Int, Bitmap) -> Unit
 ) {
     val maroonColor = Color(0xFF9A3B3B)
+    val context = LocalContext.current
 
     var judulBuku by remember { mutableStateOf("") }
     var kategori by remember { mutableStateOf("") }
@@ -68,25 +73,26 @@ fun BooksDialog(
                 OutlinedTextField(
                     value = judulBuku,
                     onValueChange = { judulBuku = it },
-                    label = { Text(text = stringResource(id = R.string.judul),
-                        color = maroonColor) },
+                    label = { Text(text = stringResource(id = R.string.judul), color = maroonColor)},
                     maxLines = 1,
                     keyboardOptions = KeyboardOptions(
                         capitalization = KeyboardCapitalization.Words,
                         imeAction = ImeAction.Next
                     ),
+                    textStyle = TextStyle(color = maroonColor), // Set text color to maroon
                     modifier = Modifier.padding(top = 8.dp)
                 )
 
                 OutlinedTextField(
                     value = kategori,
                     onValueChange = { kategori = it },
-                    label = { Text(text = stringResource(id = R.string.penulis),  color = maroonColor)  },
+                    label = { Text(text = stringResource(id = R.string.penulis), color = maroonColor)  },
                     maxLines = 1,
                     keyboardOptions = KeyboardOptions(
                         capitalization = KeyboardCapitalization.Sentences,
                         imeAction = ImeAction.Next
                     ),
+                    textStyle = TextStyle(color = maroonColor), // Set text color to maroon
                     modifier = Modifier.padding(top = 8.dp)
                 )
 //
@@ -97,12 +103,13 @@ fun BooksDialog(
                             totalHalaman = it
                         }
                     },
-                    label = { Text(text = stringResource(id = R.string.total_halaman),  color = maroonColor) },
+                    label = { Text(text = stringResource(id = R.string.total_halaman), color = maroonColor) },
                     maxLines = 1,
                     keyboardOptions = KeyboardOptions.Default.copy(
                         imeAction = ImeAction.Done,
                         capitalization = KeyboardCapitalization.None
                     ),
+                    textStyle = TextStyle(color = maroonColor), // Set text color to maroon
                     modifier = Modifier.padding(top = 8.dp),
 
                 )
@@ -115,24 +122,30 @@ fun BooksDialog(
                     OutlinedButton(
                         onClick = { onDismissRequest() },
                         modifier = Modifier.padding(8.dp),
-                        border = BorderStroke(1.dp, Color(0xFFE2C799))
+                        border = BorderStroke(1.dp, Color(0xFF9A3B3B))
 
                     ) {
                         Text(text = stringResource(R.string.batal),
-                            color = Color(0xFFE2C799))
+                            color = Color(0xFF9A3B3B))
                     }
                     OutlinedButton(
-                        onClick = {
+                        onClick = IconButton@{
+                            if (judulBuku == "" || kategori == "" || totalHalaman == "" ){
+                                Toast.makeText(context, R.string.invalid, Toast.LENGTH_LONG).show()
+                                return@IconButton
+                            }
+
                             val totalHalamanValue = totalHalaman.toIntOrNull() ?: 0
 
                             if (totalHalamanValue <= 0) {
-                                return@OutlinedButton
+                                Toast.makeText(context, R.string.input_invalid, Toast.LENGTH_LONG).show()
+                                return@IconButton
                             }
 
                             onSave(judulBuku, kategori, totalHalamanValue, bitmap)
                             onDismissRequest()
                         },
-                        enabled = judulBuku.isNotEmpty() && kategori.isNotEmpty() && totalHalaman.isNotEmpty(),
+//                        enabled = judulBuku.isNotEmpty() && kategori.isNotEmpty() && totalHalaman.isNotEmpty(),
                         modifier = Modifier.padding(8.dp),
                         border = BorderStroke(1.dp, Color(0xFF9A3B3B))
 
@@ -156,7 +169,7 @@ fun AddDialogPreview() {
         BooksDialog(
             bitmap = null,
             onDismissRequest = {},
-            onSave = { _, _, _, _, -> }
+            onSave = { _, _, _, _ -> }
         )
     }
 }

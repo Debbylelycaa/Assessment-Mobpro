@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId = "org.d3if0152.bakuapp"
-        minSdk = 23
+        minSdk = 25
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -87,6 +87,7 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.7.7")
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
+    implementation("androidx.wear.compose:compose-material3:1.0.0-alpha23")
     ksp("androidx.room:room-compiler:2.6.1")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
